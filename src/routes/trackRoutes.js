@@ -1,17 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
 const requireAuth = require("../middlewares/requireAuth");
 
 const Track = mongoose.model("Track");
 
 const router = express.Router();
 
-// all of the route handlers will require the user to sign in
 router.use(requireAuth);
 
 router.get("/tracks", async (req, res) => {
-  // even if it doens't find any, there'll be an empty arr
   const tracks = await Track.find({ userId: req.user._id });
 
   res.send(tracks);
